@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/base.css">
+    <link rel="stylesheet" href="/styles/modules.css">
+    <title>Book Search Results</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Best Books!</h1>
+        <h2>Search Results</h2>
+        </div>
+        <div class="result-container">
+            <% if (typeof books !== 'undefined' && books.length > 0) { %>
+                <% books.forEach(function(book){ %>
+                    <div class="result">
+                        <img src="<%= book.image || 'book-icon-139.png' %>" alt="<%= book.title %>">
+                        <h3><%= book.title %></h3>
+                        <p>Author:<%= book.author %></p>
+                       <details><summary>Description</summary> <p><%= book.description %></p> </details>
+                    </div>
+                <% }); %> 
+            <% } else { %>
+                <p>No books found</p>
+            <% } %>
+        </div>
+  
+</body>

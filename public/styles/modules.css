@@ -1,0 +1,127 @@
+form{
+    margin: 0 auto;
+    margin-top: 200px;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    width: 500px;
+    height: 250px;
+    justify-content: center;
+    align-items: center;
+
+}
+.radio-container{
+    
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+}
+.radio-container input{
+    margin-right: 10px;
+}
+.radio-container label{
+    margin-right: 10px;
+}
+.radio-container input[type="radio"]{
+    accent-color: #007bff;
+}
+.radio-container input[type="radio"]:checked{
+    background-color: #007bff;
+}
+.radio-container input[type="radio"]:checked + label{
+    color: #007bff;
+}
+.radio-container input[type="radio"]:checked + label:before{
+    content: '✓';
+}
+input[type="text"]{
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+}
+input[type="submit"]{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.container{
+    color:white;
+    background-color: #007bff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.result{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    width: 300px;
+    height: 100%;
+}
+
+
+img{
+    width:300px;
+    height:300px;
+    border-radius: 5px;
+}
+.result-container{
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+p{
+    font-size: 9px;
+    color: #333;
+}
+
+.result { overflow: hidden; }
+details > summary { cursor: pointer; }
+
+details{
+    font-size: 12px;
+    color: #333;
+}
+details summary{
+    font-size: 12px;
+    color: #333;
+}
+details summary:hover{
+    color: #007bff;
+}
+details p{
+    font-size: 12px;
+    color: #333;
+}
+
+
+
+
