@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/base.css">
+    <link rel="stylesheet" href="/styles/modules.css">
+    <title>Book Search</title>
+</head>
+<body>
+    <%- include('../../layouts/header') %>
+        <form id="search-form" action="/searches" method="POST">
+        <div class="Search-container">
+            <h1>Book Search</h1>
+            <h2>Search for a book by title or author</h2>
+        <input type="text" name="name" placeholder="SEARCH BY NAME OR AUTHOR" required>
+        <div class="radio-container">
+            <input type="radio" name="type" value="name" id="name" required>
+            <label for="Title" required>TITLE</label>
+            <input type="radio" name="type" value="Author" id="Author" required>
+            <label for="Author" required>AUTHOR</label>
+        </div>
+               <input type="submit" value="SEARCH">
+    </form>
+    
+    <script>
+        document.getElementById('search-form').addEventListener('submit', function(event) {
+             var input = this.querySelector('input[name="name"]');
+             var searchItem = input.value.trim();
+             if (!searchItem) {return;}
+             var isAuthor = this.querySelector('input[name="type"]:checked').value === 'Author';
+             var paramsName= isAuthor ? `author_name` : `book_name`;
+             var url = '/searches?' + paramsName+'='+ encodeURIComponent(searchItem);
+         });
+    </script>
+  </div>
+  <%- include('../../layouts/footer') %>
+</body>
+</html>

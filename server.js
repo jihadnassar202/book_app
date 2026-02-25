@@ -24,19 +24,24 @@ class Book {
         this.title = title;
         this.author = author;
         this.image =secureHttpUrl(image);
-        this.description = description;
+        this.description = description ?? 'No description available';
     }
 } 
 
 app.use(cors());
 app.set('views' ,path.join(__dirname ,'views'));      
-
 app.set('view engine' ,'ejs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));//to serve static files like css,js,images
+app.use(express.static(path.join(__dirname, 'views/layouts')));
+
 app.get('/',function(req ,res){
-        res.render('pages/searches/show');
+    res.render('pages/index');
+});
+
+app.get('/searches/new',function(req ,res){
+        res.render('pages/searches/new');
     });
    
 app.post('/searches',async function(req ,res){
@@ -54,7 +59,7 @@ app.post('/searches',async function(req ,res){
          item.volumeInfo?.authors?.[0]??null, 
          item.volumeInfo.imageLinks?.thumbnail,  
          item.volumeInfo.description)); 
-    res.render('pages/index', { books:books}); 
+    res.render('pages/searches/show', { books:books}); 
 });
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

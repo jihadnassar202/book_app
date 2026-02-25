@@ -1,6 +1,6 @@
 form{
     margin: 0 auto;
-    margin-top: 200px;
+    margin-top:120px;
     display: flex;
     flex-direction: column;
     background-color: #fff;
@@ -8,7 +8,7 @@ form{
     border-radius: 10px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
     width: 500px;
-    height: 250px;
+    height: 300px;
     justify-content: center;
     align-items: center;
 
@@ -58,16 +58,13 @@ input[type="submit"]{
     padding: 10px;
     cursor: pointer;
 }
-
-.container{
-    color:white;
-    background-color: #007bff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
+input[type="submit"]:hover{
+    transition: 0.3s ease-in-out;
+    background-color: #0051ca;
+    color: #ffffff;
+    transform: scale(1.05);
 }
+
 
 .result{
     display: flex;
@@ -122,6 +119,72 @@ details p{
     color: #333;
 }
 
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: 100%;
+}
 
 
+.welcome-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+.welcome-title{
+    font-size: 24px;
+    font-weight: bold;
+}
+.welcome-text{
+    font-size: 16px;
+    font-weight: normal;
+}
+.button{
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    text-decoration: none; /*  if the link is a button, it will not have a underline*/
+}
+.button:hover{
+    transition: 0.3s ease-in-out;
+    background-color: #0051ca;
+    color: #ffffff;
+    transform: scale(1.05);
+}
 
+.header-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: 100%;
+}
+.header-container a{
+    text-decoration: none;
+}
+.header-container a:hover{
+    transition: 0.3s ease-in-out;
+    background-color: #0051ca;
+    color: #ffffff;
+    transform: scale(1.05);
+    border-radius: 20px;
+    padding: 10px;
+}

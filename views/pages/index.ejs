@@ -5,26 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/styles/base.css">
     <link rel="stylesheet" href="/styles/modules.css">
-    <title>Book Search Results</title>
+    <title>book_app </title>
 </head>
 <body>
-    <div class="container">
-        <h1>Best Books!</h1>
-        <h2>Search Results</h2>
-        </div>
-        <div class="result-container">
-            <% if (typeof books !== 'undefined' && books.length > 0) { %>
-                <% books.forEach(function(book){ %>
-                    <div class="result">
-                        <img src="<%= book.image || 'book-icon-139.png' %>" alt="<%= book.title %>">
-                        <h3><%= book.title %></h3>
-                        <p>Author:<%= book.author %></p>
-                       <details><summary>Description</summary> <p><%= book.description %></p> </details>
-                    </div>
-                <% }); %> 
-            <% } else { %>
-                <p>No books found</p>
-            <% } %>
-        </div>
-  
-</body>
+    <%- include('../layouts/header') %>
+<div class="welcome-container">
+    <h1 class="welcome-title">Welcome to the Book App</h1>
+    <p class="welcome-text">This is a simple book search app that allows you to search for books by title or author</p>
+    <p class="welcome-text">Click the link below to go to the search page</p>
+    <a class="button" href="/searches/new">Search for a book</a>
+</div>
+  <%- include('../layouts/footer') %>
+</body> 
+</html>
+

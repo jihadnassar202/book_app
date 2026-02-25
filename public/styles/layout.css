@@ -1,0 +1,21 @@
+header {
+        color:white;
+        background-color: #007bff;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content:space-around;
+        padding: 10px;
+       flex-shrink: 0;
+       
+}
+
+footer {
+    width:100%;
+    background-color: #acaaaa;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    margin-top: auto;
+    flex-shrink: 0;
+}
