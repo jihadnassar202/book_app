@@ -1,0 +1,12 @@
+<section class="book-detail-container">
+    <div class="result">
+        <img src="<%= book.image || 'book-icon-139.png' %>" alt="<%= book.title %>">
+        <h3><%= book.title %></h3>
+        <p>Author:<%= book.author %></p>
+       <p><%= book.description %></p>
+        <div class="details-container">
+       <p >ISBN:<%= book.isbn %></p>
+       <p>  BookShelf:<%= book.category %></p>
+       </div>
+    </div>
+</section>
