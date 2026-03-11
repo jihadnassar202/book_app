@@ -13,6 +13,13 @@
     align-items: center;
 
 }
+ @media (max-width: 768px) {
+    #search-form{
+        width:300px;
+        height: 300px;
+    }
+    }
+
 .radio-container{
     
     padding: 20px;
@@ -73,20 +80,25 @@ input[type="submit"]:hover{
     justify-content: center;
     border: 1px solid #ccc;
     border-radius: 5px;
-    padding: 10px;
+    padding:0;
     margin: 10px;
     width: 300px;
-    height: 100%;
-    overflow: hidden;
+    height:400px;
+    overflow: visible;
+    box-sizing: border-box;
+
 }
 
-
-img{
-    width:300px;
-    height:300px;
-    border-radius: 5px;
-    object-fit: cover;
+.result:hover{
+    transform: scale(1.02);
+    transition: 0.3s ease-in-out;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
+
+.result > :not(img){
+    padding:5px;
+}
+
 .result-container{
     padding: 20px;
     display: flex;
@@ -158,7 +170,7 @@ details p{
     border-radius: 5px;
     padding: 10px;
     cursor: pointer;
-    text-decoration: none; /*  if the link is a button, it will not have a underline*/
+    text-decoration: none;
 }
 .button:hover{
     transition: 0.3s ease-in-out;
@@ -166,9 +178,6 @@ details p{
     color: #ffffff;
     transform: scale(1.05);
 }
-
-
-
 .details-container{
     display: flex;
     flex-direction: column;
@@ -177,6 +186,16 @@ details p{
     padding: 10px;
     
 }
+.view-details-button{
+    position: relative;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    width: 100%;
+    height: 50px;
+}
+
+
 
 .add-to-bookshelf-button{
     display: flex;

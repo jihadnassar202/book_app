@@ -11,6 +11,7 @@ const books_api_key = process.env.GOOGLE_BOOKS_API_KEY;
  const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
  });
+ const overrideMethod = require('method-override');
 function secureHttpUrl(url){
     if(!url){
         return url;
@@ -38,6 +39,14 @@ app.set('views' ,path.join(__dirname ,'views'));
 app.set('view engine' ,'ejs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(overrideMethod(function(req, res){
+    if(req.body && typeof req.body === 'object' && '_method' in req.body){
+        const method = req.body._method;
+        delete req.body._method;
+        return method;
+    }
+}));
+
 app.use(express.static(path.join(__dirname, 'public')));//to serve static files like css,js,images
 app.use(express.static(path.join(__dirname, 'views/layouts')));
 
@@ -114,7 +123,41 @@ app.post('/searches',async function(req ,res){
         
     res.render('pages/searches/show', { books:books}); 
 });
+
+app.get('/books/:id/edit',async function(req ,res){
+    const {id} = req.params;
+    try{
+        const {rows} = await pool.query('SELECT * FROM books WHERE id = $1', [id]);
+        res.render('pages/books/edit', {book: rows[0]});
+    }
+    catch(error){
+        console.error('Error fetching book:', error);
+        res.status(500).json({error: 'Internal server error'});
+    }
+});
+ 
+app.delete('/books/:id',async function(req ,res){
+    const {id} = req.params;
+    try{
+        await pool.query('DELETE FROM books WHERE id = $1', [id]);
+        res.redirect(`/`);
+    }
+    catch(error){
+        console.error('Error updating book:', error);
+        res.status(500).json({error: 'Internal server error'});
+    }
+}); 
+app.put('/books/:id', async function(req ,res){
+    const {id} = req.params;
+    try{
+        await pool.query('UPDATE books SET title = $1, author = $2, image = $3, description = $4, isbn = $5, category = $6 WHERE id = $7', [req.body.title, req.body.author, req.body.image, req.body.description, req.body.isbn, req.body.category, id]);
+        res.redirect(`/books/${id}`);
+    }
+    catch(error){
+        console.error('Error updating book:', error);
+        res.status(500).json({error: 'Internal server error'});
+    }
+}); 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
-});
-
+}); 

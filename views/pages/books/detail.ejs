@@ -1,5 +1,5 @@
 <section class="book-detail-container">
-    <div class="result">
+    <div class="details-container">
         <img src="<%= book.image || 'book-icon-139.png' %>" alt="<%= book.title %>">
         <h3><%= book.title %></h3>
         <p>Author:<%= book.author %></p>
@@ -7,6 +7,17 @@
         <div class="details-container">
        <p >ISBN:<%= book.isbn %></p>
        <p>  BookShelf:<%= book.category %></p>
+       </div>
+    <div class="buttons-container">
+       <form action="/books/<%= book.id %>" method="post">
+            <input type="hidden" name="_method" value="PUT">
+            <button type="button" class="edit-button" id="update-details-button">Update Details</button>
+        </form>
+        <%- include('../../pages/books/edit.ejs') %> 
+        <form action="/books/<%= book.id %>" method="post">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit" class="delete-button" id="delete-book-button">Delete Book</button>
+        </form>
        </div>
     </div>
 </section>
