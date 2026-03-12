@@ -52,7 +52,7 @@ app.use(express.static(path.join(__dirname, 'views/layouts')));
 
 app.get('/',async function(req ,res){
 try{
-const {rows} = await pool.query('SELECT * FROM books order by id desc');
+const {rows} = await pool.query('SELECT books.*, categories.name as category_name FROM books LEFT JOIN categories ON books.category_id = categories.id order by books.id desc');
 const totalBooks = rows.length;
 res.render('pages/index', {books: rows, totalBooks: totalBooks});
 }
@@ -63,16 +63,17 @@ catch(error){
 });
 
 app.post('/books',async function(req ,res){
-    const {title, author, image, description, isbn, category} = req.body;
+    const {title, author, image, description, isbn, category_id} = req.body;
+
     const safeAuthor = author || 'Unknown Author';
     const safeTitle = title || 'Unknown Title';
     const safeDescription = description || 'No description available';
     const safeImage = image || '';
     const safeIsbn = isbn || '';
-    const safeCategory = category || '';
+    const safeCategoryId = category_id && category_id.trim() !== '' ? category_id : null;//to prevent sql injection
     try{
-        const {rows} = await pool.query('INSERT INTO books (title, author, image, description, isbn, category) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id',
-            [safeTitle, safeAuthor, secureHttpUrl(safeImage), safeDescription, safeIsbn, safeCategory]
+        const {rows} = await pool.query('INSERT INTO books (title, author, image, description, isbn, category_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id',
+            [safeTitle, safeAuthor, secureHttpUrl(safeImage), safeDescription, safeIsbn, safeCategoryId]
         );
         const newBook = rows[0];
         res.redirect(`/books/${newBook.id}`);
@@ -87,10 +88,11 @@ app.post('/books',async function(req ,res){
 app.get('/books/:id',async function(req ,res){
     const {id} = req.params;
     try{
-        const {rows} = await pool.query('SELECT * FROM books WHERE id = $1', [id]);
-        res.render('pages/books/show', {book: rows[0]});
-        if(rows.length === 0){
+        const {rows} = await pool.query('SELECT books.*, categories.name as category_name FROM books LEFT JOIN categories ON books.category_id = categories.id WHERE books.id = $1', [id]);
+        if(rows.length === 0){     
             return res.status(404).json({error: 'Book not found'});
+        }else{
+            res.render('pages/books/show', {book: rows[0]});
         }
     }
     catch(error){
@@ -122,13 +124,18 @@ app.post('/searches',async function(req ,res){
         )); 
         
     res.render('pages/searches/show', { books:books}); 
+
 });
 
 app.get('/books/:id/edit',async function(req ,res){
     const {id} = req.params;
     try{
-        const {rows} = await pool.query('SELECT * FROM books WHERE id = $1', [id]);
-        res.render('pages/books/edit', {book: rows[0]});
+        const bookResult = await pool.query('SELECT books.*, categories.name as category_name FROM books LEFT JOIN categories ON books.category_id = categories.id WHERE books.id = $1', [id]);
+        if(bookResult.rows.length === 0){
+            return res.status(404).json({error: 'Book not found'});
+        } 
+        const categoriesResult = await pool.query('SELECT * FROM categories ORDER BY name ASC');
+        res.render('pages/books/edit', {book: bookResult.rows[0], categories: categoriesResult.rows});
     }
     catch(error){
         console.error('Error fetching book:', error);
@@ -149,8 +156,9 @@ app.delete('/books/:id',async function(req ,res){
 }); 
 app.put('/books/:id', async function(req ,res){
     const {id} = req.params;
+    const {title, author, image, description, isbn, category_id} = req.body;
     try{
-        await pool.query('UPDATE books SET title = $1, author = $2, image = $3, description = $4, isbn = $5, category = $6 WHERE id = $7', [req.body.title, req.body.author, req.body.image, req.body.description, req.body.isbn, req.body.category, id]);
+        await pool.query('UPDATE books SET title = $1, author = $2, image = $3, description = $4, isbn = $5, category_id = $6 WHERE id = $7', [title, author, secureHttpUrl(image), description, isbn, category_id, id]);
         res.redirect(`/books/${id}`);
     }
     catch(error){
